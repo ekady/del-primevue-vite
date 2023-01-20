@@ -1,0 +1,9 @@
+{
+  "auth": {
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "change_lang": "Change Lang"
+  }
+}

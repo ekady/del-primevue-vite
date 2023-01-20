@@ -1,0 +1,9 @@
+{
+  "auth": {
+    "username": "Nama Pengguna",
+    "email": "Email",
+    "password": "Kata Sandi",
+    "login": "Masuk",
+    "change_lang": "Ganti Bahasa"
+  }
+}
