@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppBaseLabel :title="route.meta.title ? t(route.meta.title) : route.name" />
+    <AppBaseLabel :title="route.meta.title ? t(route.meta.title) : route.name?.toString()" />
     <Breadcrumb v-bind="breadcrumb" />
   </div>
 </template>
@@ -27,7 +27,7 @@ const breadcrumb: ComputedRef<{ home: MenuItem; crumbs: MenuItem[] }> = computed
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @layer components {
   .p-breadcrumb {
     @apply border-none bg-transparent p-0 my-1 text-xs;

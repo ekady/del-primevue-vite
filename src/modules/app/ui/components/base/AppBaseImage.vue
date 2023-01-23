@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 export interface Props {
   icon?: string;
@@ -11,71 +11,36 @@ export interface Props {
   height?: string;
   width?: string;
   isIcon?: boolean;
-  isImage?: boolean;
-  isPng?: boolean;
-  isSvg?: boolean;
-  isJpg?: boolean;
   isCursor?: boolean;
+  extension?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  icon: "default",
-  image: "default",
-  height: "100%",
-  width: "100%",
+  icon: 'default',
+  image: 'default',
+  height: 'auto',
+  width: 'auto',
   isIcon: false,
-  isImage: false,
-  isPng: false,
-  isSvg: false,
-  isJpg: false,
+  isCursor: false,
 });
 
-/**
- * @description Set the image source
- * 
- * @return {string}
- */
 const sourceImage = computed(() => {
-  if (props.isIcon) {
-    if (props.isJpg) {
-      return require(`@/modules/app/assets/icons/${props.icon}.svg`)
-    } else if (props.isPng) {
-      return require(`@/modules/app/assets/icons/${props.icon}.png`)
-    } else {
-      return require(`@/modules/app/assets/icons/${props.icon}.svg`)
-    }
-  } else if (props.isImage) {
-    if (props.isJpg) {
-      return require(`@/modules/assets/images/${props.image}.jpg`)
-    } else if (props.isPng) {
-      return require(`@/modules/assets/images/${props.image}.png`)
-    } else {
-      return require(`@/modules/assets/images/${props.image}.svg`)
-    }
-  }
-})
+  if (props.isIcon) return require(`@/modules/app/assets/icons/${props.icon}.svg`);
 
-/**
- * @description Define style for base image
- * 
- * @return {object}
- */
+  const extension = props.extension ? `.${props.extension}` : '.png';
+  return require(`@/modules/assets/images/${props.image}${extension}`);
+});
+
 const styleBaseImage = computed(() => {
   return {
     height: props.height,
     width: props.width,
-  }
-})
+  };
+});
 
-
-/**
- * @description Define class for base image
- * 
- * @return {object}
- */
 const classBaseImage = computed(() => {
   return {
     'cursor-pointer': props.isCursor,
-  }
-})
+  };
+});
 </script>

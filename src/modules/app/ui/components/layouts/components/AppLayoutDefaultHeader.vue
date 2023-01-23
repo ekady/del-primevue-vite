@@ -1,7 +1,7 @@
 <template>
   <Toolbar>
     <template #start>
-      <i class="pi pi-bars cursor-pointer mr-3 hover:text-blue-600 text-slate-600" />
+      <i class="pi pi-bars cursor-pointer mr-3 hover:text-blue-600 text-slate-600 block lg:hidden" @click="emit('change')" />
       <AppBaseBreadcrumb />
     </template>
 
@@ -24,6 +24,10 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { locale } = useI18n();
+
+const emit = defineEmits<{
+  (e: 'change'): void;
+}>();
 
 const languages = ref([
   { text: 'English', value: 'en' },

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, type CSSProperties } from 'vue'
+import { computed, type CSSProperties } from 'vue';
 
 export interface Props {
   title: string;
@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
   size: 13,
   isBold: true,
   color: 'black',
-})
+});
 
 const labelStyle = computed<CSSProperties>(() => ({
   fontSize: `${props.size}px`,
@@ -28,5 +28,5 @@ const labelStyle = computed<CSSProperties>(() => ({
   fontWeight: props.fontWeight ? props.fontWeight : props.isBold ? 'bold' : 'normal',
   fontStyle: props.italic ? 'italic' : 'normal',
   textDecoration: props.underline ? 'underline' : undefined,
-}))
+}));
 </script>

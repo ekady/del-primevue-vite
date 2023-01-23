@@ -39,7 +39,7 @@
 import { ref, watch, useAttrs, onBeforeMount } from 'vue';
 import { DropdownProps } from 'primevue/dropdown';
 
-export interface Props {
+export interface Props extends DropdownProps {
   value?: any;
   returnObject?: boolean;
 }
@@ -84,3 +84,11 @@ onBeforeMount(() => {
   if (props.value) setPropsValue();
 });
 </script>
+
+<style lang="scss" scoped>
+@layer components {
+  .p-dropdown {
+    @apply border;
+  }
+}
+</style>
