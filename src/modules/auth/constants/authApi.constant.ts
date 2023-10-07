@@ -1,5 +1,5 @@
 const AUTH_BASE_API = '/auth';
 
-export enum AuthApi {
-  Login = `${AUTH_BASE_API}/login`,
-}
+export const AUTH_API = {
+  LOGIN: `${AUTH_BASE_API}/login`,
+};

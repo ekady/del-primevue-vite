@@ -1,11 +1,15 @@
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import vueI18n from '@intlify/vite-plugin-vue-i18n';
+import VueI18n from '@intlify/unplugin-vue-i18n/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueI18n()],
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+  },
+  plugins: [vue(), VueI18n({})],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -14,7 +18,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "./src/modules/app/assets/styles/main.scss";`,
+        additionalData: `@import "./src/core/assets/styles/main.scss";`,
       },
     },
   },

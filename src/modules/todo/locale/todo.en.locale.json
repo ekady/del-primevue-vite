@@ -1,0 +1,24 @@
+{
+  "todo": {
+    "title": "To Do",
+    "completed": "Completed",
+    "todo": "To do",
+    "create": "Create",
+    "edit": "Edit",
+    "detail": "Detail",
+
+    "alert_message": {
+      "success_create": "Create to do success!",
+      "success_update": "Edit to do success!",
+      "success_delete": "Delete to do success!"
+    },
+
+    "id": "Id",
+    "user_id": "User Id",
+    "todos": "To Do",
+    "status": "Status",
+    "complete": "Completed",
+    "not_complete": "Not Completed",
+    "redirecting_table": "Redirecting to todos table. Please wait..."
+  }
+}

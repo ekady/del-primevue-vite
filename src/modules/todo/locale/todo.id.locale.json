@@ -1,0 +1,24 @@
+{
+  "todo": {
+    "title": "Catatan",
+    "completed": "Selesai",
+    "todo": "Catatan",
+    "create": "Buat",
+    "edit": "Edit",
+    "detail": "Detail",
+
+    "alert_message": {
+      "success_create": "Catatan berhasil dibuat!",
+      "success_update": "Catatan berhasil diubah!",
+      "success_delete": "Catatan berhasil dihapus!"
+    },
+
+    "id": "Id",
+    "user_id": "Id Pengguna",
+    "todos": "Catatan",
+    "status": "Status",
+    "complete": "Selesai",
+    "not_complete": "Belum Selesai",
+    "redirecting_table": "Diarahkan ke tabel catatan. Harap Tunggu..."
+  }
+}

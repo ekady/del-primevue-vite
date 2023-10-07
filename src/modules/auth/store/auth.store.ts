@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import type { IAuthForm, IAuthLoginResponse, IAuthStore } from '@/modules/auth/model/auth.model';
 import http from '@/plugins/axios';
-import { AuthApi } from '../constants/authApi.constant';
+import { AUTH_API } from '../constants/authApi.constant';
 
 export const useAuthStore = defineStore('auth', {
   state: (): IAuthStore => ({
@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         this.auth_loading = true;
 
-        const { data } = await http.post<IAuthLoginResponse>(AuthApi.Login, payload);
+        const { data } = await http.post<IAuthLoginResponse>(AUTH_API.LOGIN, payload);
         this.$patch({
           auth_isAuthenticated: true,
           auth_token: data.token,
@@ -40,13 +40,7 @@ export const useAuthStore = defineStore('auth', {
 
   // For activated persist state, you can add the code below:
   persist: {
-    enabled: true,
-    strategies: [
-      {
-        storage: localStorage,
-        key: 'auth',
-        paths: ['auth_isAuthenticated', 'auth_token', 'auth_userInfo'],
-      },
-    ],
+    key: 'auth',
+    paths: ['auth_isAuthenticated', 'auth_token', 'auth_userInfo'],
   },
 });

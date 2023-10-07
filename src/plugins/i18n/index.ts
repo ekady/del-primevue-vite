@@ -20,9 +20,10 @@ for (const path in modules) {
 }
 
 const i18n = createI18n({
-  locale: localStorage.getItem('lang') || 'en',
+  locale: localStorage.getItem('lang') ?? 'en',
   fallbackLocale: 'en',
   messages,
+  legacy: true,
 });
 
 export default i18n;

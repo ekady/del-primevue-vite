@@ -1,4 +1,4 @@
-export type IAuthUserInfo = {
+export interface IAuthUserInfo {
   id: number | null;
   username: string | null;
   email: string | null;
@@ -6,21 +6,21 @@ export type IAuthUserInfo = {
   lastName: string | null;
   gender: string | null;
   image: string | null;
-};
+}
 
-export type IAuthStore = {
+export interface IAuthStore {
   auth_isAuthenticated: boolean;
   auth_token: string | null;
   auth_userInfo: IAuthUserInfo | null;
   auth_loading: boolean;
-};
+}
 
-export type IAuthForm = {
+export interface IAuthForm {
   username: string | null;
   password: string | null;
-};
+}
 
-export type IAuthLoginResponse = {
+export interface IAuthLoginResponse {
   id: number;
   username: string;
   email: string;
@@ -29,4 +29,4 @@ export type IAuthLoginResponse = {
   gender: string;
   image: string;
   token: string;
-};
+}

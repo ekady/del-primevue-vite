@@ -1,6 +1,15 @@
-import { FormGroup } from './modules/app/ui/components/form';
+import { FormGroup } from './core/components/form';
 
-import { AppBaseDropdown, AppBaseBreadcrumb, AppBaseImage, AppBaseLabel } from './modules/app/ui/components/base';
+import {
+  BaseDropdown,
+  BaseBreadcrumb,
+  BaseImage,
+  BaseLabel,
+  BaseCardFilter,
+  BaseTableFooter,
+  BaseTableHeader,
+  BaseTableAction,
+} from './core/components/base';
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -12,10 +21,16 @@ declare module '@vue/runtime-core' {
     FormGroup: typeof FormGroup;
 
     // Base Components
-    AppBaseImage: typeof AppBaseImage;
-    AppBaseLabel: typeof AppBaseLabel;
-    AppBaseBreadcrumb: typeof AppBaseBreadcrumb;
-    AppBaseDropdown: typeof AppBaseDropdown;
+    BaseImage: typeof BaseImage;
+    BaseLabel: typeof BaseLabel;
+    BaseBreadcrumb: typeof BaseBreadcrumb;
+    BaseDropdown: typeof BaseDropdown;
+    BaseCardFilter: typeof BaseCardFilter;
+
+    // Base Table Components
+    BaseTableFooter: typeof BaseTableFooter;
+    BaseTableHeader: typeof BaseTableHeader;
+    BaseTableAction: typeof BaseTableAction;
 
     // PrimeVue
     Autocomplete: typeof import('primevue/autocomplete')['default'];
@@ -55,56 +70,57 @@ declare module '@vue/runtime-core' {
     Galleria: typeof import('primevue/galleria')['default'];
     Image: typeof import('primevue/image')['default'];
     InlineMessage: typeof import('primevue/inlinemessage')['default'];
-    InputMask: typeof import('primevue/inputmask')['default'];
-    InputNumber: typeof import('primevue/inputnumber')['default'];
-    InputSwitch: typeof import('primevue/inputswitch')['default'];
-    InputText: typeof import('primevue/inputtext')['default'];
+    Inplace: typeof import('primevue/inlineMessage')['default'];
+    InputMask: typeof import('primevue/inputMask')['default'];
+    InputNumber: typeof import('primevue/inputNumber')['default'];
+    InputSwith: typeof import('primevue/inputSwith')['default'];
+    InputText: typeof import('primevue/inputText')['default'];
     Knob: typeof import('primevue/knob')['default'];
-    ListBox: typeof import('primevue/listbox')['default'];
-    MegaMenu: typeof import('primevue/megamenu')['default'];
+    ListBox: typeof import('primevue/listBox')['default'];
+    MegaMenu: typeof import('primevue/MegaMenu')['default'];
     Menu: typeof import('primevue/menu')['default'];
     Menubar: typeof import('primevue/menubar')['default'];
     Message: typeof import('primevue/message')['default'];
-    MultiSelect: typeof import('primevue/multiselect')['default'];
-    OrderList: typeof import('primevue/orderlist')['default'];
-    OrganizationChart: typeof import('primevue/organizationchart')['default'];
-    OverlayPanel: typeof import('primevue/overlaypanel')['default'];
+    MultiSelect: typeof import('primevue/multiSelect')['default'];
+    OrderList: typeof import('primevue/orderList')['default'];
+    OrganizationChart: typeof import('primevue/organizationChart')['default'];
+    OverlayPanel: typeof import('primevue/overlayPanel')['default'];
     Paginator: typeof import('primevue/paginator')['default'];
     Panel: typeof import('primevue/panel')['default'];
-    PanelMenu: typeof import('primevue/panelmenu')['default'];
+    PanelMenu: typeof import('primevue/panelMenu')['default'];
     Password: typeof import('primevue/password')['default'];
-    PickList: typeof import('primevue/picklist')['default'];
+    PickList: typeof import('primevue/pickList')['default'];
     ProgressBar: typeof import('primevue/progressbar')['default'];
-    ProgressSpinner: typeof import('primevue/progressspinner')['default'];
-    RadioButton: typeof import('primevue/radiobutton')['default'];
+    ProgressSpinner: typeof import('primevue/progressSpinner')['default'];
+    RadioButton: typeof import('primevue/radioButton')['default'];
     Rating: typeof import('primevue/rating')['default'];
     Row: typeof import('primevue/row')['default'];
-    SelectButton: typeof import('primevue/selectbutton')['default'];
-    ScrollPanel: typeof import('primevue/scrollpanel')['default'];
-    ScrollTop: typeof import('primevue/scrolltop')['default'];
+    SelectButton: typeof import('primevue/selectButton')['default'];
+    ScrollPanel: typeof import('primevue/scrollPanel')['default'];
+    ScrollTop: typeof import('primevue/scrollTop')['default'];
     Slider: typeof import('primevue/slider')['default'];
     Sidebar: typeof import('primevue/sidebar')['default'];
     Skeleton: typeof import('primevue/skeleton')['default'];
-    SpeedDial: typeof import('primevue/speeddial')['default'];
-    SplitButton: typeof import('primevue/splitbutton')['default'];
+    SpeedDial: typeof import('primevue/speedDial')['default'];
+    SplitButton: typeof import('primevue/splitButton')['default'];
     Splitter: typeof import('primevue/splitter')['default'];
-    SplitterPanel: typeof import('primevue/splitterpanel')['default'];
+    SplitterPanel: typeof import('primevue/splitterPanel')['default'];
     Steps: typeof import('primevue/steps')['default'];
-    TabMenu: typeof import('primevue/tabmenu')['default'];
-    TabPanel: typeof import('primevue/tabpanel')['default'];
+    TabMenu: typeof import('primevue/tabMenu')['default'];
+    TabPanel: typeof import('primevue/tabPanel')['default'];
     Tag: typeof import('primevue/tag')['default'];
     Textarea: typeof import('primevue/textarea')['default'];
     Terminal: typeof import('primevue/terminal')['default'];
-    TieredMenu: typeof import('primevue/tieredmenu')['default'];
+    TieredMenu: typeof import('primevue/tieredMenu')['default'];
     Timeline: typeof import('primevue/timeline')['default'];
     Toast: typeof import('primevue/toast')['default'];
     Toolbar: typeof import('primevue/toolbar')['default'];
-    ToggleButton: typeof import('primevue/togglebutton')['default'];
+    ToggleButton: typeof import('primevue/toggleButton')['default'];
     Tree: typeof import('primevue/tree')['default'];
-    TreeSelect: typeof import('primevue/treeselect')['default'];
-    TreeTable: typeof import('primevue/treetable')['default'];
-    TriStateCheckbox: typeof import('primevue/tristatecheckbox')['default'];
-    VirtualScroller: typeof import('primevue/virtualscroller')['default'];
+    TreeSelect: typeof import('primevue/treeSelect')['default'];
+    TreeTable: typeof import('primevue/treeTable')['default'];
+    TriStateCheckbox: typeof import('primevue/triStateCheckbox')['default'];
+    VirtualScroller: typeof import('primevue/virtualScroller')['default'];
   }
 }
 

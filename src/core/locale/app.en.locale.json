@@ -1,0 +1,39 @@
+{
+  "validations": {
+    "required": "{attribute} is required",
+    "email": "Must be a valid email address"
+  },
+  "common": {
+    "show": "Show",
+    "entries": "Entries",
+    "search": "Search...",
+    "of": "of",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "edit": "Edit",
+    "view": "View",
+    "delete": "Delete",
+    "submit": "Submit",
+    "action": "Action",
+    "yes": "Yes",
+    "ok": "Ok",
+    "no": "No",
+    "success": "Success",
+    "confirmation": "Confirmation",
+    "warning": "Warning",
+    "confirm_leave_page": "Are you sure you want to leave page?",
+    "confirm_delete": "Are you sure you want to delete this data?"
+  },
+  "menu": {
+    "options": "Options",
+    "delete": "Delete",
+    "update": "Update",
+    "navigate": "Navigate",
+    "vue": "Vue Website",
+    "router": "Router"
+  },
+  "message": {
+    "something_error": "Something went wrong"
+  }
+}

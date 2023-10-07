@@ -1,6 +1,7 @@
-import { LAYOUT } from '@/modules/app/constant/layout.constant';
-import { AppBaseWrapper } from '@/modules/app/ui/components/base';
 import type { RouteRecordRaw } from 'vue-router';
+
+import { LAYOUT } from '@/core/constants/layout.constant';
+import { BaseWrapper } from '@/core/components/base';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -9,12 +10,12 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: false,
       layout: LAYOUT.AUTH,
     },
-    component: AppBaseWrapper,
+    component: BaseWrapper,
     children: [
       {
         path: 'login',
         name: 'login',
-        component: () => import('../ui/AuthLoginUI.vue'),
+        component: () => import('../views/AuthLoginUI.vue'),
       },
     ],
   },
