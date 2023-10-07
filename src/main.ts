@@ -8,26 +8,34 @@ import PrimeVue from 'primevue/config';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 
-import i18n from './plugins/i18n';
 import pinia from './core/store';
-import router from './core/router';
+import loadRouter from './core/router';
+import loadLocale from './plugins/i18n';
 
 import RegisterBaseComponent from './core/components';
 import RegisterPrimeVueComponents from './plugins/primevue';
 
 import bus from './plugins/bus';
 
-const app = createApp(App);
+const initApp = async () => {
+  const app = createApp(App);
 
-app.use(PrimeVue, {});
-RegisterPrimeVueComponents(app);
+  app.use(PrimeVue, {});
+  RegisterPrimeVueComponents(app);
 
-app.use(i18n);
-app.use(pinia);
-app.use(router);
+  app.use(pinia);
 
-RegisterBaseComponent(app);
+  const router = await loadRouter();
+  app.use(router);
 
-app.provide<Emitter<TBusEvent>>('bus', bus);
+  const i18n = await loadLocale();
+  app.use(i18n);
 
-app.mount('#app');
+  RegisterBaseComponent(app);
+
+  app.provide<Emitter<TBusEvent>>('bus', bus);
+
+  app.mount('#app');
+};
+
+initApp();
