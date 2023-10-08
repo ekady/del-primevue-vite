@@ -1,16 +1,78 @@
-# Vue 3 + TypeScript + Vite
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# Vue 3 Boilerplate with TypeScript, PrimeVue, and Tailwind CSS
+
+This is a boilerplate codebase for starting a Vue 3 project with TypeScript, PrimeVue, and Tailwind CSS. It includes a recommended folder structure and naming conventions for your project.
+
+## Prerequisites
+
+Make sure you have Node.js version 16 or higher installed.
 
 ## Recommended IDE Setup
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) +  [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
 
-## Type Support For `.vue` Imports in TS
+## Installation
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+1. Clone this repository.
+`git clone https://github.com/ekady/del-primevue-vite.git`
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+2. Navigate to the project directory.
+    `cd del-primevue-vite`
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+3. Install the project dependencies using Yarn.
+    `yarn install`
+
+## Development Mode
+
+To run the project in development mode, use the following command:
+`yarn dev`
+
+## Build
+
+To build the project, use the following command:
+`yarn build`
+
+## Preview Build
+
+To preview the build, use the following command:
+`yarn preview`
+
+## Folder Structure
+
+    src/
+    ├── core/
+    │   ├── assets/
+    │   │   └── styles/
+    │   ├── ... (other global resources)
+    │
+    ├── modules/
+    │   ├── auth/
+    │   │   ├── store/
+    │   │   │   └── auth.store.ts
+    │   │   ├── router/
+    │   │   │   └── auth.route.ts
+    │   │   ├── locale/
+    │   │   │   ├── auth.en.locale.json
+    │   │   │   └── auth.id.locale.json
+    │   │   ├── views/
+    │   │   │   └── AuthLoginUI.vue
+    │   │   ├── ... (other auth module resources)
+    │   │
+    │   ├── ...(other modules)
+    │
+    ├── plugins/
+    │   ├── axios/
+    │   │   └── index.ts
+    │   ├── ...(other plugins)
+    │
+    └── ... (other source code)
+
+## Naming Conventions
+
+- Store files should follow the convention: `<name>.store.ts`.
+- Router files should follow the convention: `<name>.router.ts`.
+- Locale files should follow the convention: `<name>.<lang>.locale.json`.
+
+## License
+
+This project is licensed under the MIT License.
