@@ -1,5 +1,16 @@
 <template>
-  <Menu :model="items" class="w-full pb-3 pt-0 rounded-none bg-transparent border-0" :pt="menuPassTrough" :exact="false" />
+  <Menu :model="items" class="w-full pb-3 pt-0 rounded-none bg-transparent border-0" :pt="menuPassTrough" :exact="false">
+    <template #item="{ item, props }">
+      <RouterLink v-if="item.to" :to="item.to" v-bind="props.action">
+        <span :class="item.icon" />
+        <span class="ml-2">{{ item.label }}</span>
+      </RouterLink>
+      <a v-else v-ripple v-bind="props.action">
+        <span :class="item.icon" />
+        <span class="ml-2">{{ item.label }}</span>
+      </a>
+    </template>
+  </Menu>
 </template>
 
 <script lang="ts" setup>
@@ -9,7 +20,7 @@ import { useRoute } from 'vue-router';
 
 import { useToast } from 'primevue/usetoast';
 import Menu, { MenuPassThroughOptions } from 'primevue/menu';
-import { MenuItem } from 'primevue/menuitem';
+import type { MenuItem } from 'primevue/menuitem';
 
 import { FRONT_MENUS } from '@/core/constants/menus.constant';
 
@@ -46,10 +57,10 @@ const items = computed<MenuItem[]>(() => [
 ]);
 
 const menuPassTrough = computed<MenuPassThroughOptions>(() => ({
-  menuitem: ({ instance }) => ({
+  item: ({ instance }) => ({
     class: route.fullPath.includes(instance?.item?.to) ? 'my-2 p-focus' : 'my-2',
   }),
-  submenuHeader: { class: 'lg:shadow' },
+  submenuLabel: { class: 'lg:shadow' },
 }));
 
 defineExpose({ items });

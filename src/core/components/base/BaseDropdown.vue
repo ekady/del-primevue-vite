@@ -1,5 +1,5 @@
 <template>
-  <Dropdown v-bind="{ ...defaultPrimeProps, ...props.prime }" v-model:model-value="modelValue">
+  <Select v-bind="{ ...defaultPrimeProps, ...props.prime }" v-model="modelValue">
     <template #content="slotProps">
       <slot name="content" v-bind="slotProps" />
     </template>
@@ -29,15 +29,14 @@
         <span v-else-if="slotProps.value"> {{ slotProps.value }} </span>
       </slot>
     </template>
-  </Dropdown>
+  </Select>
 </template>
 
 <script lang="ts" setup>
 import { ref, watch, onBeforeMount } from 'vue';
 
-import { DropdownProps } from 'primevue/dropdown';
-
 import isEqual from 'lodash/isEqual';
+import { SelectProps } from 'primevue/select';
 
 const defaultPrimeProps = {
   autoFilterFocus: true,
@@ -49,7 +48,8 @@ export interface Props {
   value?: any;
   returnObject?: boolean;
   dense?: boolean;
-  prime?: DropdownProps;
+  prime?: SelectProps;
+  optionValue?: string;
 }
 
 const props = defineProps<Props>();
@@ -65,7 +65,7 @@ const onChangeValue = () => {
   let val = null;
 
   if (!props.returnObject && ![null, undefined].includes(modelValue.value) && typeof modelValue.value === 'object') {
-    const valueKey = (props.prime?.optionValue as string) || 'value';
+    const valueKey = (props?.optionValue as string) || 'value';
     val = modelValue.value[valueKey];
   } else {
     val = modelValue.value;
@@ -80,15 +80,13 @@ const setPropsValue = () => {
   else {
     modelValue.value = (props.prime?.options as any[])?.find(option => {
       if (typeof option !== 'object' && typeof props.value !== 'object') return option === props.value;
-
-      const optionValue = (props.prime?.optionValue as string) || 'value';
+      const optionValue = (props?.optionValue as string) || 'value';
 
       if (props.value?.[optionValue]) return option[optionValue] === props.value[optionValue];
 
       return option[optionValue] === props.value;
     });
   }
-  onChangeValue();
 };
 
 watch(
@@ -112,11 +110,11 @@ defineExpose({ onChangeValue, setPropsValue });
 
 <style lang="scss" scoped>
 @layer components {
-  :deep(.p-dropdown-label.p-inputtext) {
+  :deep(.p-select-label.p-inputtext) {
     @apply shadow-none;
   }
 
-  .p-dropdown.dense {
+  .p-select.dense {
     :deep(.p-inputtext) {
       @apply py-2;
     }

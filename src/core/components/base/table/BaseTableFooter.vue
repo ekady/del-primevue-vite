@@ -1,16 +1,11 @@
 <template>
   <Paginator
-    :template="{
-      '640px': 'PrevPageLink CurrentPageReport NextPageLink',
-      '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
-      '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-      default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown JumpToPageInput',
-    }"
-    :rows="props.limit"
-    :totalRecords="props.totalRecords"
+    :rowsPerPageOptions="limitOptions ?? defaultLimitOptions"
+    :rows="limit"
+    :totalRecords="totalRecords"
+    :first="currentPage * limit"
     @page="onChangePage"
-  >
-  </Paginator>
+  />
 </template>
 
 <script lang="ts" setup>
@@ -18,17 +13,20 @@ import { PageState } from 'primevue/paginator';
 
 export interface BaseTableFooterProps {
   limit: number;
+  currentPage: number;
   totalRecords: number;
+  limitOptions?: number[];
 }
 
-const props = defineProps<BaseTableFooterProps>();
+const props = withDefaults(defineProps<BaseTableFooterProps>(), { currentPage: 0 });
 
-const emit = defineEmits<{
-  change: [page: number];
-}>();
+const defaultLimitOptions = [5, 10, 20];
+
+const emit = defineEmits<{ change: [pageState: PageState] }>();
 
 const onChangePage = (pageState: PageState) => {
-  emit('change', pageState.page);
+  const page = props.limit === pageState.rows ? pageState.page : 0;
+  emit('change', { ...pageState, page });
 };
 
 defineExpose({ onChangePage });

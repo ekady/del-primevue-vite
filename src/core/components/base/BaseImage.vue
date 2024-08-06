@@ -1,5 +1,5 @@
 <template>
-  <img :src="sourceImage" :style="styleBaseImage" :class="classBaseImage" :alt="isIcon ? icon : image" />
+  <img :src="sourceImage" :style="styleBaseImage" :class="classBaseImage" :alt="alt" />
 </template>
 
 <script lang="ts" setup>
@@ -16,6 +16,7 @@ export interface Props {
   isSvg?: boolean;
   isJpg?: boolean;
   isCursor?: boolean;
+  alt?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -28,6 +29,7 @@ const props = withDefaults(defineProps<Props>(), {
   isPng: false,
   isSvg: false,
   isJpg: false,
+  alt: '',
 });
 
 /**
@@ -72,11 +74,9 @@ const styleBaseImage = computed(() => {
  *
  * @return {object}
  */
-const classBaseImage = computed(() => {
-  return {
-    'cursor-pointer': props.isCursor,
-  };
-});
+const classBaseImage = {
+  'cursor-pointer': props.isCursor,
+};
 
 defineExpose({ sourceImage, styleBaseImage, classBaseImage });
 </script>

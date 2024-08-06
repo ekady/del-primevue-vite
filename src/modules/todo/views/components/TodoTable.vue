@@ -1,26 +1,23 @@
 <template>
-  <BaseTableHeader @change="appTable_onChange" hide-search>
+  <BaseTableHeader @change="appTable_onChange">
     <RouterLink :to="{ name: 'todoCreate' }">
       <Button :label="t('todo.create')" />
     </RouterLink>
   </BaseTableHeader>
   <DataTable
     :value="todo_list.todos"
-    :loading="todo_loading"
+    :loading="todo_listLoading || todo_loadingDelete"
     lazy
-    paginator
     sor
     @sort="appTable_lazyHandleTableSort"
     v-bind="appTable_meta"
-    :totalRecords="todo_list.total || 0"
-    @page="appTable_lazyChangePage"
   >
     <Column field="action" header="" style="width: 15%">
       <template #body="{ data }">
         <BaseTableAction
           :detail-to="`/todo/${data.id}`"
           :edit-to="`/todo/${data.id}/edit`"
-          @delete="e => confirmDelete(data.id, e)"
+          @delete="(e: MouseEvent) => confirmDelete(data.id, e)"
         />
       </template>
     </Column>
@@ -34,37 +31,38 @@
       </template>
     </Column>
   </DataTable>
+  <BaseTableFooter
+    :limit="Number(route.query.limit) || 5"
+    :totalRecords="todo_list.total || 0"
+    :currentPage="Number(route.query.page) || 0"
+    @change="(pageState: PageState) => handlePagination({limit: pageState.rows, skip: pageState.first, page: pageState.page})"
+  />
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, watch, inject, Ref } from 'vue';
+import { onBeforeMount, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 
-import { useTodo } from '@/modules/todo/composables';
+import { useRoute, useRouter } from 'vue-router';
+import { useDeleteTodo, useGetListTodo } from '../../composables/useTodo';
 import { useAppTable } from '@/core/composables/useAppTable';
-import { TODO_FILTER, TODO_TABLE_NAME } from '@/modules/todo/constants/todo.constant';
-
-const filter = inject<Ref<Record<string, TKey>>>(TODO_FILTER);
+import type { PageState } from 'primevue/paginator';
 
 const { t } = useI18n();
+const route = useRoute();
+const router = useRouter();
 
-const { todo_fetchTodos, todo_deleteTodo, todo_list, todo_loading } = useTodo({ clearBeforeUnmount: true });
+const { todo_fetchList, todo_list, todo_listLoading } = useGetListTodo();
+const { todo_deleteTodo, todo_loadingDelete } = useDeleteTodo();
 
-const {
-  appTable_lazyHandleTableSort,
-  appTable_options,
-  appTable_handleParams,
-  appTable_onChange,
-  appTable_lazyChangePage,
-  appTable_meta,
-} = useAppTable(TODO_TABLE_NAME.todo);
+const { appTable_lazyHandleTableSort, appTable_handleParams, appTable_onChange, appTable_meta } = useAppTable();
 
 const fetchTodos = async () => {
   const mappedSort = { userId: 'user_id' };
   const mappedFilter = { status: 'completed' };
-  todo_fetchTodos(appTable_handleParams(mappedSort, mappedFilter));
+  todo_fetchList(appTable_handleParams(mappedSort, mappedFilter));
 };
 
 const confirm = useConfirm();
@@ -72,7 +70,7 @@ const toast = useToast();
 
 const deleteTodo = async (id: string) => {
   await todo_deleteTodo(id);
-  toast.add({ severity: 'success', detail: t('todo.alert_message.success_delete') });
+  toast.add({ severity: 'success', summary: 'Delete Todo', detail: t('todo.alert_message.success_delete'), closable: true });
   fetchTodos();
 };
 
@@ -92,15 +90,14 @@ const confirmDelete = (id: string, event?: MouseEvent) => {
   });
 };
 
-watch(
-  () => filter?.value,
-  val => val && appTable_onChange(val),
-  { deep: true },
-);
+const handlePagination = (params: Record<string, TKey>) => {
+  router.push({ query: { ...route.query, ...params } });
+};
 
-watch<IAppTableOptions, true>(appTable_options, async () => {
-  await fetchTodos();
-});
+watch<Record<string, string>, true>(
+  () => route.query as Record<string, string>,
+  () => fetchTodos(),
+);
 
 onBeforeMount(() => {
   fetchTodos();

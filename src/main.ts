@@ -5,23 +5,32 @@ import App from './App.vue';
 import { Emitter } from 'mitt';
 
 import PrimeVue from 'primevue/config';
-import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
+import Aura from '@primevue/themes/aura';
+import ToastService from 'primevue/toastservice';
+import ConfirmationService from 'primevue/confirmationservice';
 
 import pinia from './core/store';
 import loadRouter from './core/router';
 import loadLocale from './plugins/i18n';
 
 import RegisterBaseComponent from './core/components';
-import RegisterPrimeVueComponents from './plugins/primevue';
 
 import bus from './plugins/bus';
 
 const initApp = async () => {
   const app = createApp(App);
 
-  app.use(PrimeVue, {});
-  RegisterPrimeVueComponents(app);
+  app.use(PrimeVue, {
+    theme: {
+      preset: Aura,
+      options: {
+        darkModeSelector: '.dark-mode',
+      },
+    },
+  });
+  app.use(ToastService);
+  app.use(ConfirmationService);
 
   app.use(pinia);
 

@@ -3,15 +3,15 @@
   <Divider class="my-3" />
   <form @submit.prevent="onSubmit">
     <!-- Email -->
-    <FormGroup :label="t('auth.username')" noGutter :validator="v$.username" v-slot="{ classes }">
+    <FormGroup :label="t('auth.username')" noGutter :validator="auth_validation.username" v-slot="{ classes }">
       <BaseLabel :title="t('auth.username')" />
-      <InputText :disabled="auth_loading" v-model:model-value="form.username" :class="{ ...classes }" />
+      <InputText :disabled="auth_loading" v-model:model-value="auth_form.username" :class="{ ...classes }" />
     </FormGroup>
 
     <!-- Password -->
-    <FormGroup :label="t('auth.password')" noGutter :validator="v$.password" v-slot="{ classes }">
+    <FormGroup :label="t('auth.password')" noGutter :validator="auth_validation.password" v-slot="{ classes }">
       <BaseLabel :title="t('auth.password')" />
-      <InputText :disabled="auth_loading" type="password" v-model:model-value="form.password" :class="{ ...classes }" />
+      <InputText :disabled="auth_loading" type="password" v-model:model-value="auth_form.password" :class="{ ...classes }" />
     </FormGroup>
     <Button :label="t('common.submit')" :loading="auth_loading" type="submit" class="mt-4" />
 
@@ -22,43 +22,27 @@
   </form>
 </template>
 <script lang="ts" setup>
-import { reactive } from 'vue';
-
 import { useI18n } from 'vue-i18n';
 
 import { useRouter } from 'vue-router';
 
-import { useVuelidate } from '@vuelidate/core';
-import { required } from '@vuelidate/validators';
-
-import { IAuthForm } from '../model/auth.model';
-import useAuth from '../composables/useAuth';
-
-const form = reactive<IAuthForm>({ username: '', password: '' });
-const rules = {
-  username: { required },
-  password: { required },
-};
+import { useAuthLogin } from '../composables/useAuth';
 
 const { t } = useI18n();
-const v$ = useVuelidate(rules, form);
 const router = useRouter();
-const { auth_doLogin, auth_loading } = useAuth();
-
-const redirectToDashboard = () => {
-  router.replace({ name: 'dashboard' });
-};
+const { auth_doLogin, auth_loading, auth_validation, auth_form } = useAuthLogin();
 
 const onSubmit = async (): Promise<void> => {
-  v$.value.$touch();
-  if (v$.value.$invalid) return;
+  auth_validation.value.$touch();
+  if (auth_validation.value.$invalid) return;
 
   try {
-    await auth_doLogin(form, redirectToDashboard);
+    await auth_doLogin();
+    router.replace({ name: 'dashboard' });
   } catch (_) {
     //
   }
 };
 
-defineExpose({ onSubmit, redirectToDashboard });
+defineExpose({ onSubmit });
 </script>

@@ -19,6 +19,10 @@
     "status": "Status",
     "complete": "Selesai",
     "not_complete": "Belum Selesai",
-    "redirecting_table": "Diarahkan ke tabel catatan. Harap Tunggu..."
+    "redirecting_table": "Diarahkan ke tabel catatan. Harap Tunggu...",
+
+    "select_status": "Pilih Status",
+    "select_user_id": "Pilih Id Pengguna",
+    "select_id": "Pilih Id"
   }
 }

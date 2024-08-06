@@ -1,4 +1,4 @@
-import { MenuItem } from 'primevue/menuitem';
+import type { MenuItem } from 'primevue/menuitem';
 
 export const FRONT_MENUS: Array<MenuItem> = [
   {
@@ -13,6 +13,7 @@ export const FRONT_MENUS: Array<MenuItem> = [
       {
         label: 'todo.title',
         icon: 'pi pi-file-edit',
+        url: '/todo',
         to: '/todo',
       },
     ],

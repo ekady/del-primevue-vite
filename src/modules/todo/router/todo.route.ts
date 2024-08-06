@@ -1,14 +1,12 @@
 import { LAYOUT } from '@/core/constants/layout.constant';
 import { BaseWrapper } from '@/core/components/base';
 import type { RouteRecordRaw } from 'vue-router';
-import { TODO_TABLE_NAME } from '../constants/todo.constant';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/todo',
     meta: { requiresAuth: true, menuGroup: 'TODOS', breadcrumb: 'todo.title' },
     component: BaseWrapper,
-    props: { tableNames: [TODO_TABLE_NAME.todo] },
     children: [
       {
         name: 'todo',

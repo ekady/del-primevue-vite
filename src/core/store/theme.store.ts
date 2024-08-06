@@ -1,11 +1,10 @@
 import { defineStore } from 'pinia';
 
 export function updateTheme(theme: 'dark' | 'light' = 'light') {
-  const newValue = `/themes/lara-${theme}-blue/theme.css`;
-  const relElements = Array.prototype.slice.call(document.getElementsByTagName('link'));
-  relElements.forEach((element: HTMLElement) => {
-    if (element.getAttribute('href')?.includes('/themes/')) element.setAttribute('href', newValue);
-  });
+  const element = document.querySelector('html');
+
+  if (theme === 'dark') element?.classList.add('dark-mode');
+  else element?.classList.remove('dark-mode');
 }
 
 export const useThemeStore = defineStore('theme', {

@@ -15,7 +15,7 @@ http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 
 http.interceptors.response.use(undefined, (error: AxiosError<{ message?: string }>) => {
   if (error.message !== 'canceled') {
-    bus.emit('toast', { severity: 'error', closable: true, detail: error.message ?? 'Something went wrong' });
+    bus.emit('toast', { severity: 'error', closable: true, summary: 'Error', detail: error.message ?? 'Something went wrong' });
   }
   return Promise.reject(error);
 });

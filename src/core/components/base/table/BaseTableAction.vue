@@ -1,35 +1,42 @@
 <template>
-  <div class="flex items-center gap-3">
+  <div class="flex items-center">
     <slot name="start" />
 
-    <RouterLink v-if="!props.hideDetail && props.detailTo" :to="props.detailTo" class="no-underline">
-      <span v-tooltip.top="t('common.view')" class="pi pi-eye" :class="{ 'opacity-50': props.disabledDetail }" />
-    </RouterLink>
-    <span
-      v-else
+    <Button
+      v-if="!props.hideDetail"
       @click="e => emit('view', e)"
       v-tooltip.top="t('common.view')"
-      class="pi pi-eye"
-      :class="{ 'opacity-50': props.disabledDetail, 'cursor-pointer': !props.disabledDetail }"
+      :to="props.detailTo"
+      rounded
+      outlined
+      text
+      :as="detailTo ? 'router-link' : ''"
+      icon="pi pi-eye"
+      :class="{ 'opacity-50': props.disabledDetail, 'cursor-pointer': !props.disabledDetail, 'no-underline': true }"
     />
 
-    <RouterLink v-if="!props.hideEdit && props.editTo" :to="props.editTo" class="no-underline">
-      <span v-tooltip.top="t('common.edit')" class="pi pi-pencil" :class="{ 'opacity-50': props.disabledEdit }" />
-    </RouterLink>
-    <span
-      v-else
+    <Button
+      v-if="!props.hideEdit"
       @click="e => emit('edit', e)"
       v-tooltip.top="t('common.edit')"
-      class="pi pi-pencil"
-      :class="{ 'opacity-50': props.disabledEdit, 'cursor-pointer': !props.disabledEdit }"
+      :to="props.editTo"
+      rounded
+      outlined
+      text
+      :as="editTo ? 'router-link' : ''"
+      icon="pi pi-pencil"
+      :class="{ 'opacity-50': props.disabledEdit, 'cursor-pointer': !props.disabledEdit, 'no-underline': true }"
     />
 
-    <span
+    <Button
       v-if="!props.hideDelete"
       @click="e => emit('delete', e)"
       v-tooltip.top="t('common.delete')"
-      class="pi pi-trash"
-      :class="{ 'opacity-50': props.disabledDelete, 'cursor-pointer': !props.disabledDelete }"
+      rounded
+      outlined
+      text
+      icon="pi pi-trash"
+      :class="{ 'opacity-50': props.disabledDelete, 'cursor-pointer': !props.disabledDelete, 'no-underline': true }"
     />
 
     <slot name="end" />

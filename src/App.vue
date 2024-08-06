@@ -34,7 +34,7 @@ bus?.on('toast', event => {
   toast.add(event);
 });
 
-bus?.on('loadingApp', isLoading => {
+bus?.on('loading_app', isLoading => {
   loading.value = isLoading;
 });
 

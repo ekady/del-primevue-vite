@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia';
-import type { IAuthForm, IAuthLoginResponse, IAuthStore } from '@/modules/auth/model/auth.model';
-import http from '@/plugins/axios';
-import { AUTH_API } from '../constants/authApi.constant';
+import type { IAuthStore } from '@/modules/auth/model/auth.model';
 
 export const useAuthStore = defineStore('auth', {
   state: (): IAuthStore => ({
@@ -16,23 +14,6 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
-    async auth_doLogin(payload: IAuthForm): Promise<IAuthLoginResponse> {
-      try {
-        this.auth_loading = true;
-
-        const { data } = await http.post<IAuthLoginResponse>(AUTH_API.LOGIN, payload);
-        this.$patch({
-          auth_isAuthenticated: true,
-          auth_token: data.token,
-          auth_userInfo: data,
-        });
-        return Promise.resolve(data);
-      } catch (err) {
-        return Promise.reject(err);
-      } finally {
-        this.auth_loading = false;
-      }
-    },
     auth_doLogout(): void {
       this.$reset();
     },

@@ -10,7 +10,7 @@ import { computed, type ComputedRef } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
-import { MenuItem } from 'primevue/menuitem';
+import type { MenuItem } from 'primevue/menuitem';
 
 const route = useRoute();
 const { t } = useI18n();
@@ -32,7 +32,7 @@ defineExpose({ breadcrumb });
 
 <style lang="scss">
 @layer components {
-  .p-breadcrumb {
+  nav.p-breadcrumb {
     @apply border-none bg-transparent p-0 my-1 text-xs;
   }
 }

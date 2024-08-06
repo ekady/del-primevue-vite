@@ -11,6 +11,7 @@ const routes: Array<RouteRecordRaw> = [
       layout: LAYOUT.AUTH,
     },
     component: BaseWrapper,
+    redirect: '/auth/login',
     children: [
       {
         path: 'login',

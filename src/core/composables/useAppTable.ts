@@ -1,34 +1,23 @@
-import { computed, reactive } from 'vue';
-
-import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 
 import { PageState } from 'primevue/paginator';
 import { DataTableSortEvent } from 'primevue/datatable';
 
-import { useTableStore } from '@/core/store/table.store';
 import { FIRST_PAGE, LIMIT_DEFAULT } from '../constants/pagination.constant';
+import { useRoute, useRouter } from 'vue-router';
 
 export const initialTableOptions: IAppTableOptions = { filter: { limit: 5 }, options: {} };
 
 /**
  * @description Composable global for table methods.
  */
-export function useAppTable(tableName?: string, initial: IAppTableOptions = { ...initialTableOptions }) {
-  const appTable_store = useTableStore();
-  const appTable_state = storeToRefs(appTable_store).table_state;
-  const appTable_options = reactive<IAppTableOptions>({
-    filter: { ...appTable_state.value?.[tableName ?? ''], ...initial.filter },
-    options: initial.options,
-  });
+export function useAppTable() {
+  const route = useRoute();
+  const router = useRouter();
 
   const appTable_meta = computed(() => {
-    const savedState = appTable_state.value[tableName ?? ''] || {};
-
-    const savedPage = savedState.page ?? FIRST_PAGE;
-    const savedLimit = savedState.limit ?? LIMIT_DEFAULT;
-
-    const page = appTable_options.filter?.page ?? savedPage;
-    const limit = appTable_options.filter.limit ?? savedLimit;
+    const page = route.query.page || FIRST_PAGE;
+    const limit = route.query.limit || LIMIT_DEFAULT;
     return {
       rows: +limit,
       first: +page * +limit,
@@ -36,33 +25,10 @@ export function useAppTable(tableName?: string, initial: IAppTableOptions = { ..
   });
 
   /**
-   * @description Save table state (such as sort & pagination) to global table store
-   */
-  const appTable_saveTableState = (params: Record<string, TKey>): void => {
-    const paramsSaved: IAppTableStateOptions = {
-      sort: params.sort as string,
-      skip: params.skip as number,
-      limit: params.limit as number,
-      search: params.search as string,
-      page: params.page as string,
-    };
-    if (tableName) appTable_store.table_setTableState(tableName, paramsSaved);
-  };
-
-  /**
-   * @description Clear table state from store
-   */
-  const appTable_clearTableState = () => {
-    if (tableName) appTable_store.table_clearTableState(tableName);
-  };
-
-  /**
    * @description Change filter values
    */
   const appTable_onChange = (val: Record<string, TKey>): void => {
-    const { changeType, ...filter } = val;
-    if (changeType === 'saved-state') appTable_options.filter = { ...appTable_options.filter, ...filter };
-    else appTable_options.filter = { ...appTable_options.filter, skip: null, ...val };
+    router.push({ query: { ...route.query, ...val } });
   };
 
   /**
@@ -73,7 +39,7 @@ export function useAppTable(tableName?: string, initial: IAppTableOptions = { ..
     const order = sort.sortOrder === -1 ? 'desc' : 'asc';
     const sortOrder = field ? `${field}|${order}` : null;
 
-    appTable_options.options = { sort: sortOrder };
+    router.push({ query: { ...route.query, sort: sortOrder } });
   };
 
   /**
@@ -82,14 +48,14 @@ export function useAppTable(tableName?: string, initial: IAppTableOptions = { ..
   const appTable_lazyChangePage = (pageState: PageState) => {
     const skip = pageState.rows * pageState.page;
     const page = pageState.page;
-    appTable_options.filter = { ...appTable_options.filter, skip, page };
+    router.push({ query: { ...route.query, skip, page } });
   };
 
   /**
    * @description Transform custom sort key if different from table field key
    */
   const appTable_mappingSort = (mapping: Record<string, string> = {}): Record<string, string | null> => {
-    const [sortField, sortOrder] = appTable_options.options?.sort ? appTable_options.options.sort.split('|') : [null, null];
+    const [sortField, sortOrder] = route.query?.sort ? (route.query.sort as string).split('|') : [null, null];
     const field = sortField ?? null;
     const order = sortOrder ?? null;
     const mappedField = field ? mapping[field] ?? field : null;
@@ -104,8 +70,8 @@ export function useAppTable(tableName?: string, initial: IAppTableOptions = { ..
    * @description Transform custom filter key if different from filter field key
    */
   const appTable_mappingFilter = (mapping: Record<string, string>): Record<string, TKey> => {
-    return Object.keys(appTable_options.filter).reduce((acc, key) => {
-      acc[mapping?.[key] ?? key] = appTable_options.filter[key];
+    return Object.keys(route.query).reduce((acc, key) => {
+      acc[mapping?.[key] ?? key] = route.query[key] as TKey;
       return acc;
     }, {} as Record<string, TKey>);
   };
@@ -122,22 +88,13 @@ export function useAppTable(tableName?: string, initial: IAppTableOptions = { ..
     const sortMapping = mappedSort ? appTable_mappingSort(mappedSort) : null;
     const filterMapping = mappedFilter ? appTable_mappingFilter(mappedFilter) : null;
 
-    const savedState = appTable_state.value[tableName ?? ''] || {};
-    const optionsSort = sortMapping ?? appTable_options.options;
-    const sortSavedState = savedState.sort ? savedState : optionsSort;
+    const optionSort = (sortMapping?.sort as string) || (route.query.sort as string);
+    const filter = filterMapping || (route.query as Record<string, TKey>);
 
-    const options = appTable_options.options.sort !== undefined ? optionsSort : { sort: sortSavedState.sort ?? null };
-    const filter = filterMapping ?? appTable_options.filter;
-
-    const finalParams = { ...savedState, ...filter, ...options };
-    appTable_saveTableState(finalParams);
-
-    return finalParams;
+    return { ...filter, sort: optionSort || null, page: appTable_meta.value.first, limit: appTable_meta.value.rows };
   };
 
   return {
-    appTable_options,
-    appTable_state,
     appTable_meta,
     appTable_lazyHandleTableSort,
     appTable_lazyChangePage,
@@ -145,6 +102,5 @@ export function useAppTable(tableName?: string, initial: IAppTableOptions = { ..
     appTable_mappingSort,
     appTable_mappingFilter,
     appTable_handleParams,
-    appTable_clearTableState,
   };
 }

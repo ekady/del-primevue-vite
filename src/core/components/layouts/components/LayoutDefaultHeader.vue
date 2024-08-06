@@ -9,7 +9,6 @@
       <div class="flex items-center gap-2">
         <BaseDropdown
           :value="locale"
-          :options="languages"
           :prime="{
             options: languages,
             optionLabel: 'text',

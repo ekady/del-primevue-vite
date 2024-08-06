@@ -33,15 +33,15 @@ const loadRouter = async () => {
     ],
   });
 
-  router.beforeEach((to: RouteLocationNormalized) => {
-    bus.emit('loadingApp', true);
+  router.beforeEach((to, from) => {
+    if (to.path !== from.path) bus.emit('loading_app', true);
 
     const authStore = useAuthStore();
     if (to.meta.requiresAuth && !authStore.auth_isAuthenticated) return { name: 'login' };
   });
 
-  router.afterEach(() => {
-    bus.emit('loadingApp', false);
+  router.afterEach((to, from) => {
+    if (to.path !== from.path) bus.emit('loading_app', false);
   });
 
   return router;

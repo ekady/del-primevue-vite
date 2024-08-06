@@ -1,5 +1,5 @@
 <template>
-  <label :style="labelStyle"> {{ props.title }} </label>
+  <span :style="labelStyle"> {{ props.title }} </span>
 </template>
 
 <script setup lang="ts">

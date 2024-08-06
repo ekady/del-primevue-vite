@@ -34,6 +34,6 @@ declare global {
 
   type TBusEvent = {
     toast: ToastMessageOptions;
-    loadingApp: boolean;
+    loading_app: boolean;
   };
 }
