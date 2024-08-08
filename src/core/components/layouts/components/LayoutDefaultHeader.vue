@@ -24,6 +24,15 @@
           severity="secondary"
           class="!w-10 !h-10 box-border border"
         />
+        <div class="card flex justify-center">
+          <Avatar icon="pi pi-user" shape="circle" class="cursor-pointer !w-10 !h-10 box-border" @click="togglePopover" />
+
+          <Popover ref="popover">
+            <div class="flex flex-col gap-4 w-[16rem]">
+              <Button type="button" :label="t('common.logout')" icon="pi pi-sign-out" text class="text-left" @click="confirmLogout" />
+            </div>
+          </Popover>
+        </div>
       </div>
     </template>
   </Toolbar>
@@ -35,12 +44,42 @@ import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 
 import { useThemeStore } from '@/core/store/theme.store';
+import { useAuthStore } from '@/modules/auth/store/auth.store';
+import { useRouter } from 'vue-router';
+import { useConfirm } from 'primevue/useconfirm';
 
-const emit = defineEmits<{
-  toggle: [];
-}>();
+const emit = defineEmits<{ toggle: [] }>();
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
+const router = useRouter();
+const confirm = useConfirm();
+const popover = ref();
+
+const togglePopover = (event: MouseEvent) => {
+  popover.value?.toggle(event);
+};
+
+const { auth_doLogout } = useAuthStore();
+
+const onLogout = () => {
+  auth_doLogout();
+  router.replace('/');
+};
+
+const confirmLogout = (event?: MouseEvent) => {
+  confirm.require({
+    target: event?.currentTarget as HTMLElement,
+    message: t('common.confirm_logout'),
+    icon: 'pi pi-sign-out',
+    header: t('common.logout'),
+    acceptIcon: 'pi pi-check',
+    rejectIcon: 'pi pi-times',
+    acceptLabel: t('common.logout'),
+    rejectLabel: t('common.no'),
+    rejectProps: { outlined: true },
+    accept: onLogout,
+  });
+};
 
 const languages = ref([
   { text: 'English', value: 'en' },
