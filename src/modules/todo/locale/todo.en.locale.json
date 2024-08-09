@@ -23,6 +23,8 @@
 
     "select_status": "Select Status",
     "select_user_id": "Select User Id",
-    "select_id": "Select Id"
+    "select_id": "Select Id",
+
+    "delete_todo": "Delete Todo"
   }
 }

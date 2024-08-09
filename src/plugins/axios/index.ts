@@ -1,6 +1,7 @@
 import axios, { type InternalAxiosRequestConfig, type AxiosInstance, type AxiosError } from 'axios';
 
 import bus from '@/plugins/bus';
+import loadLocale from '../i18n';
 
 const http: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -13,9 +14,15 @@ http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   return config;
 });
 
-http.interceptors.response.use(undefined, (error: AxiosError<{ message?: string }>) => {
+http.interceptors.response.use(undefined, async (error: AxiosError<{ message?: string }>) => {
+  const { global } = await loadLocale();
   if (error.message !== 'canceled') {
-    bus.emit('toast', { severity: 'error', closable: true, summary: 'Error', detail: error.message ?? 'Something went wrong' });
+    bus.emit('toast', {
+      severity: 'error',
+      closable: true,
+      summary: global.t('common.error'),
+      detail: error.message ?? global.t('common.message.something_error'),
+    });
   }
   return Promise.reject(error);
 });

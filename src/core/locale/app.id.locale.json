@@ -14,16 +14,19 @@
     "edit": "Edit",
     "view": "Lihat",
     "delete": "Hapus",
-    "submit": "Submit",
+    "submit": "Kirim",
     "action": "Aksi",
     "yes": "Ya",
     "ok": "Ok",
     "no": "Tidak",
     "success": "Sukses",
+    "error": "Kesalahan",
     "confirmation": "Konfirmasi",
     "warning": "Peringatan",
     "confirm_leave_page": "Apakah Anda yakin ingin meninggalkan halaman ini?",
-    "confirm_delete": "Apakah Anda yakin ingin menghapus data ini?"
+    "confirm_delete": "Apakah Anda yakin ingin menghapus data ini?",
+    "logout": "Keluar",
+    "confirm_logout": "Apakah Anda yakin ingin keluar?"
   },
   "menu": {
     "options": "Opsi",

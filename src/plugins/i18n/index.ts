@@ -1,9 +1,9 @@
-import { createI18n } from 'vue-i18n';
+import { createI18n, I18nOptions } from 'vue-i18n';
 
 const loadLocale = async () => {
   const modules = import.meta.glob('/**/*.locale.json');
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const messages: any = {};
+  const messages: I18nOptions['messages'] = {};
 
   for (const path in modules) {
     const matched = path.match(/([A-Za-z0-9-_]+)\./gi);

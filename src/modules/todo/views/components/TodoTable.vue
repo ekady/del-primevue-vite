@@ -70,7 +70,7 @@ const toast = useToast();
 
 const deleteTodo = async (id: string) => {
   await todo_deleteTodo(id);
-  toast.add({ severity: 'success', summary: 'Delete Todo', detail: t('todo.alert_message.success_delete'), closable: true });
+  toast.add({ severity: 'success', summary: t('todo.delete_todo'), detail: t('todo.alert_message.success_delete'), closable: true });
   fetchTodos();
 };
 
@@ -78,12 +78,14 @@ const confirmDelete = (id: string, event?: MouseEvent) => {
   confirm.require({
     target: event?.currentTarget as HTMLElement,
     message: t('common.confirm_delete'),
+    header: t('common.delete'),
     icon: 'pi pi-trash',
     group: 'popup',
     acceptIcon: 'pi pi-check',
     rejectIcon: 'pi pi-times',
     acceptLabel: t('common.yes'),
     rejectLabel: t('common.no'),
+    rejectProps: { outlined: true },
     accept: () => {
       deleteTodo(id);
     },

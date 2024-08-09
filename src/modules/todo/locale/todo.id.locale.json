@@ -23,6 +23,8 @@
 
     "select_status": "Pilih Status",
     "select_user_id": "Pilih Id Pengguna",
-    "select_id": "Pilih Id"
+    "select_id": "Pilih Id",
+
+    "delete_todo": "Hapus Catatan"
   }
 }

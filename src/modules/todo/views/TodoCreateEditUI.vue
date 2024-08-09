@@ -110,6 +110,7 @@ const submit = async () => {
       push({ name: 'todo' });
     },
     rejectClass: '!hidden',
+    rejectProps: { outlined: true },
   });
 };
 
@@ -123,6 +124,7 @@ const confirmLeavePage = () => {
       push({ name: 'todo' });
     },
     rejectLabel: t('common.no'),
+    rejectProps: { outlined: true },
   });
 };
 
