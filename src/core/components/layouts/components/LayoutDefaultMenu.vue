@@ -29,25 +29,6 @@ const route = useRoute();
 
 const toast = useToast();
 const items = computed<MenuItem[]>(() => [
-  {
-    label: t('menu.options'),
-    items: [
-      {
-        label: t('menu.update'),
-        icon: 'pi pi-refresh',
-        command: () => {
-          toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
-        },
-      },
-      {
-        label: t('menu.delete'),
-        icon: 'pi pi-times',
-        command: () => {
-          toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
-        },
-      },
-    ],
-  },
   // Mapping menu from constant for 2 Level menu
   ...FRONT_MENUS.map(menu => ({
     ...menu,
