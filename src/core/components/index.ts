@@ -1,23 +1,25 @@
 import type { App } from 'vue';
-import {
-  BaseImage,
-  BaseLabel,
-  BaseBreadcrumb,
-  BaseDropdown,
-  BaseCardFilter,
-  BaseTableFooter,
-  BaseTableHeader,
-  BaseTableAction,
-} from './base';
+
 import { CommonEntryPoint, CommonNotFound } from '@/core/components/common';
 import { FormGroup } from '@/core/components/form';
-import { LayoutEmpty, LayoutAuth, LayoutDefault } from '@/core/components/layouts';
+import { LayoutAuth, LayoutDefault, LayoutEmpty } from '@/core/components/layouts';
+
+import {
+  BaseBreadcrumb,
+  BaseCardFilter,
+  BaseDropdown,
+  BaseImage,
+  BaseLabel,
+  BaseTableAction,
+  BaseTableFooter,
+  BaseTableHeader,
+} from './base';
 
 /**
  * Global register component
  * @params app
  */
-const RegisterBaseComponent = (app: App) => {
+function RegisterBaseComponent(app: App) {
   // Base
   app.component('BaseImage', BaseImage);
   app.component('BaseLabel', BaseLabel);
@@ -41,6 +43,6 @@ const RegisterBaseComponent = (app: App) => {
   // Common
   app.component('CommonNotFound', CommonNotFound);
   app.component('CommonEntryPoint', CommonEntryPoint);
-};
+}
 
 export default RegisterBaseComponent;

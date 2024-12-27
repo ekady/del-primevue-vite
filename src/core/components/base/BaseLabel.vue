@@ -1,7 +1,3 @@
-<template>
-  <span :style="labelStyle"> {{ props.title }} </span>
-</template>
-
 <script setup lang="ts">
 import { computed, type CSSProperties } from 'vue';
 
@@ -35,3 +31,7 @@ const labelStyle = computed<CSSProperties>(() => {
 
 defineExpose({ labelStyle });
 </script>
+
+<template>
+  <span :style="labelStyle"> {{ props.title }} </span>
+</template>

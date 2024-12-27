@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+import { useTheme } from '@/core/composables/useTheme';
+
+const { theme_isDark } = useTheme();
+</script>
+
 <template>
   <Card
     class="shadow-none border border-solid"
@@ -15,11 +21,6 @@
   </Card>
 </template>
 
-<script lang="ts" setup>
-import { useTheme } from '@/core/composables/useTheme';
-
-const { theme_isDark } = useTheme();
-</script>
 <style lang="scss" scoped>
 @layer components {
   filter {

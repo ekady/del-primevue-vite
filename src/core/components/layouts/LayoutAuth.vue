@@ -1,14 +1,5 @@
-<template>
-  <div class="h-full grid grid-cols-1 sm:grid-cols-2 items-center">
-    <div class="auth-block items-center hidden sm:flex" :style="rightStyle" />
-    <div class="auth-block justify-center flex-col gap-1">
-      <RouterView />
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import { HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 
 import bgAuth from '@/core/assets/img/bg-login.jpg';
 
@@ -18,6 +9,15 @@ const rightStyle: HTMLAttributes['style'] = {
   backgroundPosition: 'center',
 };
 </script>
+
+<template>
+  <div class="h-full grid grid-cols-1 sm:grid-cols-2 items-center">
+    <div class="auth-block items-center hidden sm:flex" :style="rightStyle" />
+    <div class="auth-block justify-center flex-col gap-1">
+      <RouterView />
+    </div>
+  </div>
+</template>
 
 <style lang="scss">
 @layer components {

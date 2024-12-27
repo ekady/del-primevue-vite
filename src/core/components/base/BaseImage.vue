@@ -1,7 +1,3 @@
-<template>
-  <img :src="sourceImage" :style="styleBaseImage" :class="classBaseImage" :alt="alt" />
-</template>
-
 <script lang="ts" setup>
 import { computed } from 'vue';
 
@@ -80,3 +76,7 @@ const classBaseImage = {
 
 defineExpose({ sourceImage, styleBaseImage, classBaseImage });
 </script>
+
+<template>
+  <img :src="sourceImage" :style="styleBaseImage" :class="classBaseImage" :alt="alt">
+</template>

@@ -1,17 +1,18 @@
 import { tryOnBeforeUnmount } from '@vueuse/core';
+import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
 import { useHttpAbort } from '@/core/composables/useHttpAbort';
-import { ITodoItem, ITodoResponse } from '../model/todo.model';
-import { useRoute } from 'vue-router';
-import { computed, ref } from 'vue';
 import http from '@/plugins/axios';
+
+import type { ITodoItem, ITodoResponse } from '../model/todo.model';
 
 export const TODO_ABORT_KEY = {
   TODO_FETCH_TODOS: 'TODOS_FETCH_TODOS',
   TODO_FETCH_TODO: 'TODOS_FETCH_TODO',
 };
 
-export const useGetListTodo = () => {
+export function useGetListTodo() {
   const { httpAbort_abortRequests, httpAbort_registerAbort } = useHttpAbort();
   const route = useRoute();
 
@@ -27,10 +28,9 @@ export const useGetListTodo = () => {
         ...httpAbort_registerAbort(TODO_ABORT_KEY.TODO_FETCH_TODOS),
       });
       todo_list.value = data;
-      console.log({ test: todo_numOfRequestList.value });
       return Promise.resolve(data);
     } catch (error) {
-      return Promise.reject(error as Error);
+      return Promise.reject(error);
     } finally {
       todo_numOfRequestList.value--;
     }
@@ -46,9 +46,9 @@ export const useGetListTodo = () => {
     todo_listLoading,
     todo_numOfRequestList,
   };
-};
+}
 
-export const useGetTodo = (id: string) => {
+export function useGetTodo(id: string) {
   const { httpAbort_abortRequests, httpAbort_registerAbort } = useHttpAbort();
 
   const todo_todo = ref<ITodoItem>();
@@ -64,7 +64,7 @@ export const useGetTodo = (id: string) => {
       todo_todo.value = data;
       return Promise.resolve(data);
     } catch (error) {
-      return Promise.reject(error as Error);
+      return Promise.reject(error);
     } finally {
       todo_numOfRequestTodo.value--;
     }
@@ -80,9 +80,9 @@ export const useGetTodo = (id: string) => {
     todo_todoLoading,
     todo_numOfRequestTodo,
   };
-};
+}
 
-export const useCreateTodo = () => {
+export function useCreateTodo() {
   const todo_numOfRequestCreate = ref(0);
   const todo_loadingCreate = computed(() => todo_numOfRequestCreate.value > 0);
 
@@ -93,7 +93,7 @@ export const useCreateTodo = () => {
       const { data } = await http.post('/todos/add', payload);
       return Promise.resolve(data as ITodoItem);
     } catch (error) {
-      return Promise.reject(error as Error);
+      return Promise.reject(error);
     } finally {
       todo_numOfRequestCreate.value--;
     }
@@ -104,9 +104,9 @@ export const useCreateTodo = () => {
     todo_numOfRequestCreate,
     todo_loadingCreate,
   };
-};
+}
 
-export const useEditTodo = () => {
+export function useEditTodo() {
   const todo_numOfRequestEdit = ref(0);
   const todo_loadingEdit = computed(() => todo_numOfRequestEdit.value > 0);
 
@@ -117,7 +117,7 @@ export const useEditTodo = () => {
       const { data } = await http.put(`/todos/${id}`, payload);
       return Promise.resolve(data as ITodoItem);
     } catch (error) {
-      return Promise.reject(error as Error);
+      return Promise.reject(error);
     } finally {
       todo_numOfRequestEdit.value--;
     }
@@ -128,9 +128,9 @@ export const useEditTodo = () => {
     todo_editTodo,
     todo_numOfRequestEdit,
   };
-};
+}
 
-export const useDeleteTodo = () => {
+export function useDeleteTodo() {
   const todo_numOfRequestDelete = ref(0);
   const todo_loadingDelete = computed(() => todo_numOfRequestDelete.value > 0);
 
@@ -141,7 +141,7 @@ export const useDeleteTodo = () => {
       const { data } = await http.delete(`/todos/${id}`);
       return Promise.resolve(data as ITodoItem);
     } catch (error) {
-      return Promise.reject(error as Error);
+      return Promise.reject(error);
     } finally {
       todo_numOfRequestDelete.value--;
     }
@@ -152,4 +152,4 @@ export const useDeleteTodo = () => {
     todo_deleteTodo,
     todo_numOfRequestDelete,
   };
-};
+}

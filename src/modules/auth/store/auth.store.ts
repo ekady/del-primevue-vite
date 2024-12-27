@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+
 import type { IAuthStore } from '@/modules/auth/model/auth.model';
 
 export const useAuthStore = defineStore('auth', {
@@ -22,6 +23,6 @@ export const useAuthStore = defineStore('auth', {
   // For activated persist state, you can add the code below:
   persist: {
     key: 'auth',
-    paths: ['auth_isAuthenticated', 'auth_token', 'auth_userInfo'],
+    pick: ['auth_isAuthenticated', 'auth_token', 'auth_userInfo'],
   },
 });

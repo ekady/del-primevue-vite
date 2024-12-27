@@ -1,5 +1,6 @@
+import type { RouteRecordRaw } from 'vue-router';
+
 import { LAYOUT } from '@/core/constants/layout.constant';
-import { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {

@@ -1,8 +1,9 @@
-import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
+
 import { useThemeStore } from '../store/theme.store';
 
-export const useTheme = () => {
+export function useTheme() {
   const themeStore = useThemeStore();
   const { theme_appTheme } = storeToRefs(themeStore);
 
@@ -12,4 +13,4 @@ export const useTheme = () => {
     theme_appTheme,
     theme_isDark,
   };
-};
+}

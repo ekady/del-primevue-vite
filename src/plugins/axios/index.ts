@@ -1,6 +1,7 @@
-import axios, { type InternalAxiosRequestConfig, type AxiosInstance, type AxiosError } from 'axios';
+import axios, { type AxiosError, type AxiosInstance, type InternalAxiosRequestConfig } from 'axios';
 
 import bus from '@/plugins/bus';
+
 import loadLocale from '../i18n';
 
 const http: AxiosInstance = axios.create({

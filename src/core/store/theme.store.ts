@@ -3,7 +3,8 @@ import { defineStore } from 'pinia';
 export function updateTheme(theme: 'dark' | 'light' = 'light') {
   const element = document.querySelector('html');
 
-  if (theme === 'dark') element?.classList.add('dark-mode');
+  if (theme === 'dark')
+    element?.classList.add('dark-mode');
   else element?.classList.remove('dark-mode');
 }
 

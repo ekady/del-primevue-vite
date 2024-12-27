@@ -1,4 +1,4 @@
-import { ToastMessageOptions } from 'primevue/toast';
+import type { ToastMessageOptions } from 'primevue/toast';
 
 export {};
 

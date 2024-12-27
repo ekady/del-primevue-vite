@@ -1,3 +1,84 @@
+<script lang="ts" setup>
+import isEqual from 'lodash/isEqual';
+import type { SelectProps } from 'primevue/select';
+import { onBeforeMount, ref, watch } from 'vue';
+
+const props = defineProps<Props>();
+
+const emit = defineEmits<{
+  'update:value': [value: any];
+  'change': [value: any];
+}>();
+
+const defaultPrimeProps = {
+  autoFilterFocus: true,
+  filter: true,
+  resetFilterOnHide: true,
+};
+
+export interface Props {
+  value?: any;
+  returnObject?: boolean;
+  dense?: boolean;
+  prime?: SelectProps;
+  optionValue?: string;
+}
+
+const modelValue = ref<any>();
+
+function onChangeValue() {
+  let val = null;
+
+  if (!props.returnObject && ![null, undefined].includes(modelValue.value) && typeof modelValue.value === 'object') {
+    const valueKey = (props?.optionValue as string) || 'value';
+    val = modelValue.value[valueKey];
+  } else {
+    val = modelValue.value;
+  }
+
+  emit('update:value', val);
+  emit('change', val);
+}
+
+function setPropsValue() {
+  if (typeof props.value === 'object') {
+    modelValue.value = props.value;
+  }
+  else {
+    modelValue.value = (props.prime?.options as any[])?.find(option => {
+      if (typeof option !== 'object' && typeof props.value !== 'object')
+        return option === props.value;
+      const optionValue = (props?.optionValue as string) || 'value';
+
+      if (props.value?.[optionValue])
+        return option[optionValue] === props.value[optionValue];
+
+      return option[optionValue] === props.value;
+    });
+  }
+}
+
+watch(
+  () => props.value,
+  () => setPropsValue(),
+);
+
+watch(modelValue, (val, oldVal) => {
+  const valPojo = typeof val === 'object' ? JSON.parse(JSON.stringify(val)) : val;
+  const oldValPojo = typeof oldVal === 'object' ? JSON.parse(JSON.stringify(oldVal)) : oldVal;
+
+  if (!isEqual(valPojo, oldValPojo))
+    onChangeValue();
+});
+
+onBeforeMount(() => {
+  if (props.value)
+    setPropsValue();
+});
+
+defineExpose({ onChangeValue, setPropsValue });
+</script>
+
 <template>
   <Select v-bind="{ ...defaultPrimeProps, ...props.prime }" v-model="modelValue">
     <template #content="slotProps">
@@ -31,82 +112,6 @@
     </template>
   </Select>
 </template>
-
-<script lang="ts" setup>
-import { ref, watch, onBeforeMount } from 'vue';
-
-import isEqual from 'lodash/isEqual';
-import { SelectProps } from 'primevue/select';
-
-const defaultPrimeProps = {
-  autoFilterFocus: true,
-  filter: true,
-  resetFilterOnHide: true,
-};
-
-export interface Props {
-  value?: any;
-  returnObject?: boolean;
-  dense?: boolean;
-  prime?: SelectProps;
-  optionValue?: string;
-}
-
-const props = defineProps<Props>();
-
-const emit = defineEmits<{
-  'update:value': [value: any];
-  change: [value: any];
-}>();
-
-const modelValue = ref<any>();
-
-const onChangeValue = () => {
-  let val = null;
-
-  if (!props.returnObject && ![null, undefined].includes(modelValue.value) && typeof modelValue.value === 'object') {
-    const valueKey = (props?.optionValue as string) || 'value';
-    val = modelValue.value[valueKey];
-  } else {
-    val = modelValue.value;
-  }
-
-  emit('update:value', val);
-  emit('change', val);
-};
-
-const setPropsValue = () => {
-  if (typeof props.value === 'object') modelValue.value = props.value;
-  else {
-    modelValue.value = (props.prime?.options as any[])?.find(option => {
-      if (typeof option !== 'object' && typeof props.value !== 'object') return option === props.value;
-      const optionValue = (props?.optionValue as string) || 'value';
-
-      if (props.value?.[optionValue]) return option[optionValue] === props.value[optionValue];
-
-      return option[optionValue] === props.value;
-    });
-  }
-};
-
-watch(
-  () => props.value,
-  () => setPropsValue(),
-);
-
-watch(modelValue, (val, oldVal) => {
-  const valPojo = typeof val === 'object' ? JSON.parse(JSON.stringify(val)) : val;
-  const oldValPojo = typeof oldVal === 'object' ? JSON.parse(JSON.stringify(oldVal)) : oldVal;
-
-  if (!isEqual(valPojo, oldValPojo)) onChangeValue();
-});
-
-onBeforeMount(() => {
-  if (props.value) setPropsValue();
-});
-
-defineExpose({ onChangeValue, setPropsValue });
-</script>
 
 <style lang="scss" scoped>
 @layer components {

@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router';
 
-import { LAYOUT } from '@/core/constants/layout.constant';
 import { BaseWrapper } from '@/core/components/base';
+import { LAYOUT } from '@/core/constants/layout.constant';
 
 const routes: Array<RouteRecordRaw> = [
   {

@@ -1,9 +1,9 @@
-export {};
+// Constant
+import type { LAYOUT } from '@/core/constants/layout.constant';
 
 import 'vue-router';
 
-// Constant
-import type { LAYOUT } from '@/core/constants/layout.constant';
+export {};
 
 declare module 'vue-router' {
   interface RouteMeta {

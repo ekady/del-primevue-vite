@@ -1,14 +1,14 @@
-import { createRouter, createWebHistory, type RouteLocationNormalized, type RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
+
 import { CommonEntryPoint, CommonNotFound } from '@/core/components/common';
 import { useAuthStore } from '@/modules/auth/store/auth.store';
 import bus from '@/plugins/bus';
 
-const loadRouter = async () => {
+async function loadRouter() {
   const routes: Array<RouteRecordRaw> = [];
   const modules = import.meta.glob('/**/*.route.ts');
 
   for (const path in modules) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const module: any = await modules[path]();
     routes.push(...module.default);
   }
@@ -34,17 +34,20 @@ const loadRouter = async () => {
   });
 
   router.beforeEach((to, from) => {
-    if (to.path !== from.path) bus.emit('loading_app', true);
+    if (to.path !== from.path)
+      bus.emit('loading_app', true);
 
     const authStore = useAuthStore();
-    if (to.meta.requiresAuth && !authStore.auth_isAuthenticated) return { name: 'login' };
+    if (to.meta.requiresAuth && !authStore.auth_isAuthenticated)
+      return { name: 'login' };
   });
 
   router.afterEach((to, from) => {
-    if (to.path !== from.path) bus.emit('loading_app', false);
+    if (to.path !== from.path)
+      bus.emit('loading_app', false);
   });
 
   return router;
-};
+}
 
 export default loadRouter;

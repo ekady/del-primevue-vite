@@ -1,10 +1,9 @@
+import type { DataTableSortEvent } from 'primevue/datatable';
+import type { PageState } from 'primevue/paginator';
 import { computed } from 'vue';
-
-import { PageState } from 'primevue/paginator';
-import { DataTableSortEvent } from 'primevue/datatable';
+import { useRoute, useRouter } from 'vue-router';
 
 import { FIRST_PAGE, LIMIT_DEFAULT } from '../constants/pagination.constant';
-import { useRoute, useRouter } from 'vue-router';
 
 export const initialTableOptions: IAppTableOptions = { filter: { limit: 5 }, options: {} };
 

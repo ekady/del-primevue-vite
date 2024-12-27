@@ -1,24 +1,19 @@
-import { createApp } from 'vue';
-import App from './App.vue';
-
-// Bus
-import { Emitter } from 'mitt';
-
-import PrimeVue from 'primevue/config';
-import 'primeicons/primeicons.css';
 import Aura from '@primevue/themes/aura';
-import ToastService from 'primevue/toastservice';
+import type { Emitter } from 'mitt';
+import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
+import { createApp } from 'vue';
 
-import pinia from './core/store';
-import loadRouter from './core/router';
-import loadLocale from './plugins/i18n';
-
+import App from './App.vue';
 import RegisterBaseComponent from './core/components';
-
+import loadRouter from './core/router';
+import pinia from './core/store';
 import bus from './plugins/bus';
+import loadLocale from './plugins/i18n';
+import 'primeicons/primeicons.css';
 
-const initApp = async () => {
+async function initApp() {
   const app = createApp(App);
 
   app.use(PrimeVue, {
@@ -45,6 +40,6 @@ const initApp = async () => {
   app.provide<Emitter<TBusEvent>>('bus', bus);
 
   app.mount('#app');
-};
+}
 
 initApp();

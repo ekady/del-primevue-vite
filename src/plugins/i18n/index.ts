@@ -1,16 +1,15 @@
-import { createI18n, I18nOptions } from 'vue-i18n';
+import type { I18nOptions } from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 
-const loadLocale = async () => {
+async function loadLocale() {
   const modules = import.meta.glob('/**/*.locale.json');
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const messages: I18nOptions['messages'] = {};
 
   for (const path in modules) {
-    const matched = path.match(/([A-Za-z0-9-_]+)\./gi);
+    const matched = path.match(/([\w-]+)\./g);
     if (matched && matched.length > 1) {
       const locale = matched[1].replace('.', '');
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const module: any = await modules[path]();
       if (!messages?.[locale]) {
         messages[locale] = module.default;
@@ -28,6 +27,6 @@ const loadLocale = async () => {
   });
 
   return i18n;
-};
+}
 
 export default loadLocale;

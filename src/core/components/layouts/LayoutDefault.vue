@@ -1,3 +1,29 @@
+<script setup lang="ts">
+import type { SidebarPassThroughOptions } from 'primevue/sidebar';
+import { computed, ref } from 'vue';
+
+import { useTheme } from '@/core/composables/useTheme';
+import { SIDEBAR_WIDTH } from '@/core/constants/layout.constant';
+
+import LayoutDefaultHeader from './components/LayoutDefaultHeader.vue';
+import LayoutDefaultMenu from './components/LayoutDefaultMenu.vue';
+
+const visible = ref(false);
+function toggleSidebar() {
+  visible.value = !visible.value;
+}
+
+const sidebarPassthrough = computed<SidebarPassThroughOptions>(() => ({
+  header: { class: '!py-3 !px-4' },
+  headerContent: { class: 'w-full' },
+  content: { class: '!px-0' },
+}));
+
+const widthStyle = computed<{ width: string }>(() => ({ width: SIDEBAR_WIDTH }));
+
+const { theme_isDark } = useTheme();
+</script>
+
 <template>
   <div class="relative min-h-full flex">
     <!-- Navbar -->
@@ -8,13 +34,15 @@
     >
       <div class="px-3 py-4 flex items-center gap-1">
         <span class="pi pi-prime text-xl text-sky-600" />
-        <p class="text-xl text-sky-600 font-bold">Logo</p>
+        <p class="text-xl text-sky-600 font-bold">
+          Logo
+        </p>
       </div>
       <LayoutDefaultMenu />
     </div>
     <!-- Navbar Drawer -->
     <div class="block lg:hidden">
-      <Sidebar v-model:visible="visible" :showCloseIcon="false" :pt="sidebarPassthrough" :style="widthStyle">
+      <Sidebar v-model:visible="visible" :show-close-icon="false" :pt="sidebarPassthrough" :style="widthStyle">
         <div>
           <Divider class="my-0" />
           <LayoutDefaultMenu />
@@ -24,7 +52,9 @@
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-1">
               <span class="pi pi-prime text-xl text-sky-600" />
-              <p class="text-xl text-sky-600 font-bold">Logo</p>
+              <p class="text-xl text-sky-600 font-bold">
+                Logo
+              </p>
             </div>
             <span class="pi pi-times text-sm cursor-pointer hover:text-blue-500" @click="toggleSidebar" />
           </div>
@@ -40,33 +70,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed, ref } from 'vue';
-
-import { SidebarPassThroughOptions } from 'primevue/sidebar';
-
-import { SIDEBAR_WIDTH } from '@/core/constants/layout.constant';
-
-import LayoutDefaultHeader from './components/LayoutDefaultHeader.vue';
-import LayoutDefaultMenu from './components/LayoutDefaultMenu.vue';
-import { useTheme } from '@/core/composables/useTheme';
-
-const visible = ref(false);
-const toggleSidebar = () => {
-  visible.value = !visible.value;
-};
-
-const sidebarPassthrough = computed<SidebarPassThroughOptions>(() => ({
-  header: { class: '!py-3 !px-4' },
-  headerContent: { class: 'w-full' },
-  content: { class: '!px-0' },
-}));
-
-const widthStyle = computed<{ width: string }>(() => ({ width: SIDEBAR_WIDTH }));
-
-const { theme_isDark } = useTheme();
-</script>
 
 <style lang="scss" scoped>
 .p-divider::before {

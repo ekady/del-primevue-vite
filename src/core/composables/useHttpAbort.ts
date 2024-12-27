@@ -1,13 +1,14 @@
-import { ref, type Ref } from 'vue';
 import type { AxiosRequestConfig } from 'axios';
+import { ref, type Ref } from 'vue';
 
-export const useHttpAbort = () => {
+export function useHttpAbort() {
   const httpAbort_request: Ref<Record<string, AbortController>> = ref({});
 
   const httpAbort_abortAllRequest = (): void => {
     if (Object.keys(httpAbort_request.value).length > 0) {
       Object.values(httpAbort_request.value).forEach((controller: AbortController) => {
-        if (!controller.signal.aborted) controller.abort();
+        if (!controller.signal.aborted)
+          controller.abort();
       });
       httpAbort_request.value = {};
     }
@@ -17,7 +18,8 @@ export const useHttpAbort = () => {
    * @description Clear request id from state ref
    */
   const httpAbort_clearRequest = (id: string): void => {
-    if (httpAbort_request.value[id]) delete httpAbort_request.value[id];
+    if (httpAbort_request.value[id])
+      delete httpAbort_request.value[id];
   };
 
   const httpAbort_abortRequest = (id: string): void => {
@@ -41,7 +43,8 @@ export const useHttpAbort = () => {
   };
 
   const httpAbort_registerAbort = (id: string): AxiosRequestConfig => {
-    if (httpAbort_request.value[id]) httpAbort_abortRequest(id);
+    if (httpAbort_request.value[id])
+      httpAbort_abortRequest(id);
     return httpAbort_setAbortController(id);
   };
 
@@ -53,4 +56,4 @@ export const useHttpAbort = () => {
     httpAbort_abortRequests,
     httpAbort_setAbortController,
   };
-};
+}

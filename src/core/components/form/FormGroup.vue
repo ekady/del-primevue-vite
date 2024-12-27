@@ -1,13 +1,7 @@
-<template>
-  <div class="flex flex-col gap-1" :class="noGutter ? 'mb-2' : 'mb-4'">
-    <slot :isError="!!firstError" :isValid="isValidValue" :classes="{ 'p-invalid': !!firstError, 'p-success': isValidValue }" />
-    <small v-if="!props.hideError && !!firstError" class="p-error">{{ message }}</small>
-  </div>
-</template>
-
 <script lang="ts" setup>
-import { ErrorObject, BaseValidation } from '@vuelidate/core';
-import { computed, ComputedRef } from 'vue';
+import type { BaseValidation, ErrorObject } from '@vuelidate/core';
+import type { ComputedRef } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 export interface Props {
@@ -29,7 +23,7 @@ const firstError: ComputedRef<ErrorObject | null> = computed(() => {
 });
 
 const message: ComputedRef<string> = computed(() => {
-  const firstErrorValidator = firstError ? firstError?.value?.$validator : null;
+  const firstErrorValidator = firstError.value ? firstError?.value?.$validator : null;
 
   if (firstErrorValidator && props.messages && props.messages[firstErrorValidator]) {
     return t(props.messages[firstErrorValidator], { attribute: props.label });
@@ -46,3 +40,10 @@ const isValidValue: ComputedRef<boolean> = computed(() => {
 
 defineExpose({ firstError, message, isValidValue });
 </script>
+
+<template>
+  <div class="flex flex-col gap-1" :class="noGutter ? 'mb-2' : 'mb-4'">
+    <slot :is-error="!!firstError" :is-valid="isValidValue" :classes="{ 'p-invalid': !!firstError, 'p-success': isValidValue }" />
+    <small v-if="!props.hideError && !!firstError" class="p-error">{{ message }}</small>
+  </div>
+</template>
