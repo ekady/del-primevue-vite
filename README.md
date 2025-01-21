@@ -9,7 +9,7 @@ Make sure you have Node.js version 16 or higher installed.
 
 ## Recommended IDE Setup
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) +  [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) +  [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
 
 ## Installation
 
@@ -19,23 +19,23 @@ Make sure you have Node.js version 16 or higher installed.
 2. Navigate to the project directory.
     `cd del-primevue-vite`
 
-3. Install the project dependencies using Yarn.
-    `yarn install`
+3. Install the project dependencies using Pnpm.
+    `pnpm install`
 
 ## Development Mode
 
 To run the project in development mode, use the following command:
-`yarn dev`
+`pnpm dev`
 
 ## Build
 
 To build the project, use the following command:
-`yarn build`
+`pnpm build`
 
 ## Preview Build
 
 To preview the build, use the following command:
-`yarn preview`
+`pnpm preview`
 
 ## Folder Structure
 
